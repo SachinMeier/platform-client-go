@@ -1,4 +1,4 @@
-module github.com/RiverFinancial/platform-client-go
+module github.com/SachinMeier/platform-client-go
 
 go 1.17
 
