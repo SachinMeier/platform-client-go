@@ -13,14 +13,6 @@ import (
 	log "github.com/SachinMeier/platform-client-go/pkg/log"
 )
 
-const (
-	Prod = "PROD"
-	Test = "TEST"
-
-	BaseURL_prod = "https://api.platform.river.com"
-	BaseURL_test = "http://localhost:8080"
-)
-
 type PlatformClient struct {
 	BaseURL    string
 	credential string
@@ -101,16 +93,13 @@ func (pc *PlatformClient) sendRequest(req *http.Request, response interface{}) e
 	return handleResponse(res, response)
 }
 
-func NewPlatformClient(ctx context.Context, apiKey string, accountId, env string) *PlatformClient {
+func NewPlatformClient(ctx context.Context, apiKey string, accountId, baseUrl string) *PlatformClient {
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	BaseURL := BaseURL_prod
-	if env != Prod {
-		BaseURL = BaseURL_test
-	}
+
 	return &PlatformClient{
-		BaseURL:    BaseURL,
+		BaseURL:    baseUrl,
 		accountId:  accountId,
 		credential: createCredential(apiKey),
 		HTTPClient: &http.Client{

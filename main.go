@@ -8,11 +8,37 @@ import (
 	platform "github.com/SachinMeier/platform-client-go/platform-client"
 )
 
+const (
+	env = Prod
+
+	Prod = "PROD"
+	Test = "TEST"
+
+	BaseURL_prod = "https://api.platform.river.com"
+	Api_key_prod = "UzDq1aR1LY1sIDmI8ZjwxWDDAzJhn1WyX/9LUuhK8c4="
+	Account_prod = "acc_E2PHQ72Y"
+
+	BaseURL_test = "http://localhost:8080"
+	Api_key_test = "Au4FlGJ4DnnA6L12p4ZJEBOdikEKSqhkivOhc3pPlRs="
+	Account_test = "acc_2CTR45VR"
+)
+
 func main() {
 	ctx := context.Background()
-	pc := platform.NewPlatformClient(ctx, "Au4FlGJ4DnnA6L12p4ZJEBOdikEKSqhkivOhc3pPlRs=", "acc_2CTR45VR", "TEST")
-	// test_decodeinvoice(pc)
-	// test_decodeincorrectinvoice(pc)
+	var url, api_key, acct string
+	if env == Prod {
+		url = BaseURL_prod
+		api_key = Api_key_prod
+		acct = Account_prod
+	} else {
+		url = BaseURL_test
+		api_key = Api_key_test
+		acct = Account_test
+	}
+	pc := platform.NewPlatformClient(ctx,
+		api_key,
+		acct,
+		url)
 	test_ping(pc)
 }
 
