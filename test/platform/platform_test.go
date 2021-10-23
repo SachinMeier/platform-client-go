@@ -8,6 +8,7 @@ import (
 
 	"testing"
 
+	"github.com/SachinMeier/platform-client-go/pkg/log"
 	platform "github.com/SachinMeier/platform-client-go/platform"
 )
 
@@ -16,7 +17,10 @@ func newServer(status int, response []byte) *httptest.Server {
 		http.HandlerFunc(
 			func(w http.ResponseWriter, _ *http.Request) {
 				w.WriteHeader(status)
-				w.Write(response)
+				_, err := w.Write(response)
+				if err != nil {
+					log.Error(err.Error())
+				}
 			}),
 	)
 

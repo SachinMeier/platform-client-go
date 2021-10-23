@@ -92,7 +92,7 @@ func (pc *PlatformClient) sendRequest(req *http.Request, response interface{}) e
 
 // NewPlatformClient creates a new PlatformClient
 func NewPlatformClient(ctx context.Context, baseUrl, accountId, apiKey string) *PlatformClient {
-	if ctx == nil {
+	if ctx == context.TODO() {
 		ctx = context.Background()
 	}
 
@@ -138,5 +138,5 @@ func NewPlatformClientFromEnv() *PlatformClient {
 		log.Errorf("Failed to Load Environment Variables: %s", err.Error())
 		return nil
 	}
-	return NewPlatformClient(nil, apiKey, accountId, baseUrl)
+	return NewPlatformClient(context.TODO(), apiKey, accountId, baseUrl)
 }
