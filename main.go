@@ -19,5 +19,5 @@ func main() {
 		account_id,
 		api_key,
 	)
-	testgetaccount(pc)
+	Getaccount(pc)
 }
