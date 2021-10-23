@@ -1,0 +1,26 @@
+# ubuntu
+dist: bionic
+
+lanaguage: go
+
+go:
+  - 1.16.x
+
+# only clone last commit 
+git:
+  depth: 1
+
+# skip install step (use vendor/)
+install: true
+
+# email upon failure
+notifications:
+  email: true
+
+# install golangci-lint
+before_script:
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.37.1
+
+script:
+  - golangci-lint run
+  - go test -v -race ./...

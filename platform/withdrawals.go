@@ -10,9 +10,9 @@ import (
 )
 
 type WithdrawalDetail struct {
-	Network     string `json:"network"`
-	Destination string `json:"destination"`
-	FeeLimit    int    `json:"fee_limit"`
+	Network  string `json:"network"`
+	Invoice  string `json:"destination"`
+	FeeLimit int    `json:"fee_limit"`
 }
 
 type Withdrawal struct {
@@ -30,8 +30,6 @@ type WithdrawalRequest struct {
 	Currency string `default:"BTC"`
 	Network  string `default:"LN"`
 }
-
-type sats int
 
 const (
 	LN              string = "LN"

@@ -10,16 +10,16 @@ import (
 )
 
 type DecodedInvoice struct {
-	Amount  int    `json:"amount"`
+	Amount  sats   `json:"amount"`
 	Memo    string `json:"memo"`
 	NodeId  string `json:"node_id"`
 	Invoice string `json:"destination"`
 }
 
 type FeeEstimate struct {
-	Amount  int    `json:"amount"`
+	Amount  sats   `json:"amount"`
 	Invoice string `json:"destination"`
-	Fee     int    `json:"fee"`
+	Fee     sats   `json:"fee"`
 }
 
 // DecodeInvoice decodes a Lightning Invoice using River Platform using `lncli decodepayreq`
@@ -55,7 +55,7 @@ func (pc *PlatformClient) DecodeInvoice(invoice string) (DecodedInvoice, error) 
 }
 
 // EstimateLightningFee estimates Lightning Fee of an invoice using `lncli`
-func (pc *PlatformClient) EstimateLightningFee(invoice string, amount int) (FeeEstimate, error) {
+func (pc *PlatformClient) EstimateLightningFee(invoice string, amount sats) (FeeEstimate, error) {
 	log.Infof("Estimate fee for invoice %s", invoice)
 	data := map[string]string{
 		"destination": invoice,

@@ -10,7 +10,7 @@ import (
 type Deposit struct {
 	Id        string         `json:"id"`
 	Invoice   DepositInvoice `json:"deposit_intent"`
-	Amount    int            `json:"amount"`
+	Amount    sats           `json:"amount"`
 	Detail    DepositDetail  `json:"deposit_details"`
 	State     string         `json:"state"`
 	Timestamp int            `json:"timestamp"`
@@ -38,6 +38,14 @@ func (pc *PlatformClient) GetDeposits(limit, next_timestamp int) (DepositList, e
 		log.Error("Internal Error")
 		return DepositList{}, err
 	}
+
+	// Add query params
+	query := req.URL.Query()
+	query.Add("limit", fmt.Sprint(limit))
+	if next_timestamp != 0 {
+		query.Add("next_timestamp", fmt.Sprint(next_timestamp))
+	}
+	req.URL.RawQuery = query.Encode()
 
 	var deposits DepositList
 	err = pc.sendRequest(req, &deposits)
